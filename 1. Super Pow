@@ -15,9 +15,13 @@ public:
             /*
             Euler Totient Theorem :
             Φ(1137) = Φ(7) * Φ(191) = 6 * 190 = 1140
-
             */
         }
-        return (power(a,n))%m;
+        return (power(a,n%(m-1)))%m;
+        /*
+        Fermat Little Theorem
+        power = (a ^ (n % (m-1)) ) % m;
+        where m = Prime Number
+        */
     }
 };
