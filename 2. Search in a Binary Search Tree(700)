@@ -1,0 +1,15 @@
+class Solution {
+public:
+    TreeNode* searchBST(TreeNode* root, int val) {
+        if(!root){ // Tree Leaf Node or Empty
+            return NULL;
+        }
+        if(root->val == val){ // val Found
+            return root;
+        }else if(root->val > val){ // Recursive Left Search
+            return searchBST(root->left,val);
+        }else{ // Recursive Right Search
+            return searchBST(root->right,val);
+        }
+    }
+};

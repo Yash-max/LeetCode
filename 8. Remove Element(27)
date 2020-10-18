@@ -1,0 +1,12 @@
+class Solution {
+public:
+    int removeElement(vector<int>& arr, int val) {
+        int start=0,ans=0;
+        for(int i=0;i<arr.size();i++){
+            if(arr[i]!=val){
+                swap(arr[i],arr[start++]);
+            }
+        }
+        return start;
+    }
+};
