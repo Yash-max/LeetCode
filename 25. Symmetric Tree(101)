@@ -1,0 +1,22 @@
+class Solution {
+public:
+    bool util(TreeNode* a, TreeNode* b){
+        if(!a && !b){
+            return true;
+        }else if((!a && b) || (a && !b)){
+            return false;
+        }else{
+            if(a->val != b->val){
+                return false;
+            }else{
+                return (util(a->left, b->right) && util(a->right, b->left));
+            }
+        }
+    }
+    bool isSymmetric(TreeNode* root) {
+        if(!root){
+            return true;
+        }
+        return util(root->left, root->right);
+    }
+};

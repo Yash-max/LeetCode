@@ -1,0 +1,15 @@
+class Solution {
+public:
+    void util(Node* root, vector<int> &v){
+        if(!root){return ;}
+        for(auto itr : root->children){
+            util(itr,v);
+        }
+        v.push_back(root->val);
+    }
+    vector<int> postorder(Node* root) {
+        vector<int> v;
+        util(root,v);
+        return v;
+    }
+};
