@@ -1,0 +1,23 @@
+class Solution {
+public:
+    void inorder(TreeNode* root,TreeNode*& prev,TreeNode*& x,TreeNode*& y){
+        if(!root){return;}
+        inorder(root->left,prev,x,y);
+        if(prev && prev->val > root->val){
+            if(!x){
+                x=prev;
+            }
+            y=root;
+        }
+        prev=root;
+        inorder(root->right,prev,x,y);
+    }
+    void recoverTree(TreeNode* root) {
+        if(!root || (!root->left && !root->right)){return;}
+        TreeNode* x=NULL,*y=NULL,*prev=NULL;
+        inorder(root,prev,x,y);
+        if(x){
+            swap(x->val,y->val);
+        }
+    }
+};

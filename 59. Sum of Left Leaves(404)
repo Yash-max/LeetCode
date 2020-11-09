@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int util(TreeNode* root,TreeNode* parent){
+        if(!root) {return 0;}
+        if(!root->left && !root->right){
+            if(parent->left == root) return root->val;
+            return 0;
+        }
+        return util(root->left,root)+util(root->right,root);
+    }
+    int sumOfLeftLeaves(TreeNode* root) {
+        if(!root) {return 0;}
+        return util(root->left,root)+util(root->right,root);
+    }
+};

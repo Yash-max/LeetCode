@@ -1,0 +1,32 @@
+class Solution {
+public:
+    ListNode* input(ListNode* head,ListNode* temp) {
+        if(!head){
+            return temp;
+        }
+        if(head->val > temp->val){
+            temp->next=head;
+            return temp;
+        }
+        ListNode* itr=head;
+        while(itr->next && itr->next->val <= temp->val){
+            itr=itr->next;
+        }
+        temp->next=itr->next;
+        itr->next=temp;
+        return head;
+    }
+    ListNode* insertionSortList(ListNode* head) {
+        if(!head || !head->next){
+            return head;
+        }
+        ListNode* ans=NULL;
+        while(head){
+            ListNode* temp=head;
+            head=head->next;
+            temp->next=NULL;
+            ans=input(ans,temp);
+        }
+        return ans;
+    }
+};

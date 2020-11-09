@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int sum(TreeNode* root){
+        if(!root){return 0;}
+        if(!root->left && !root->right){return root->val;}
+        if(!root->left){
+            return root->val+sum(root->right);
+        }
+        if(!root->right){
+            return root->val+sum(root->left);
+        }
+        return root->val+sum(root->left)+sum(root->right);
+    }
+    int findTilt(TreeNode* root) {
+        if(!root || (!root->left && !root->right)){return 0;}
+        int ans=0;
+        ans += abs(sum(root->left)-sum(root->right));
+        ans += findTilt(root->left)+findTilt(root->right);
+        return ans;
+    }
+};

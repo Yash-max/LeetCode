@@ -1,0 +1,24 @@
+class Solution {
+public:
+    bool util(string &s, string &t,int i,int j,int &sl,int &tl){
+        if(i == sl){
+            return true;
+        }
+        if(j == tl){
+            return false;
+        }
+        if(s[i] == t[j]){
+            return util(s,t,i+1,j+1,sl,tl);
+        }
+        return util(s,t,i,j+1,sl,tl);
+    }
+    bool isSubsequence(string s, string t) {
+        int sl=s.length();
+        int tl=t.length();
+        if(sl > tl){
+            return false;
+        }else{
+            return util(s,t,0,0,sl,tl);
+        }
+    }
+};
