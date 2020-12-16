@@ -1,0 +1,38 @@
+class Solution {
+public:
+int util(string s){
+  map<char,int> m;
+  for(int i = 0; i<s.length(); i++){
+    m[s[i]]++;
+  }
+  return m.size();
+}
+    int longestSubstring(string s, int k) {
+        int ans = 0, n = s.size();
+        int arr[26];
+        int maxunique = util(s);
+        for(int unique = 1; unique<=maxunique; unique++){
+          memset(arr,0,sizeof(arr));
+          int start = 0, end = 0, currunique = 0, atleast = 0, index = 0;
+          while(end < s.length()){
+            if(unique <= currunique){
+              index = s[end]-'a';
+              if(arr[index] == 0) unique++;
+              arr[index]++;
+              if(arr[index] == k) atleast++;
+              end++;
+            }else{
+              index = s[start]-'a';
+              if(arr[index] == k) atleast--;
+              arr[index]--;
+              if(arr[index] == 0) unique--;
+              start++;
+            }
+            if(currunique == unique && unique == atleast){
+              ans = max(ans,end-start);
+            }
+          }
+        }
+        return ans;
+    }
+};

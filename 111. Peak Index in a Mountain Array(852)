@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int peak(vector<int>& arr, int l, int r){
+        if(l == r){
+            return l;
+        }else if(l < r){
+            int mid = l+(r-l)/2;
+            if(arr[mid] > arr[mid-1] && arr[mid] > arr[mid+1]){
+                return mid;
+            }else if(arr[mid] > arr[mid-1] && arr[mid] < arr[mid+1]){
+                return peak(arr, mid, r);
+            }else if(arr[mid] < arr[mid-1] && arr[mid] > arr[mid+1]){
+                return peak(arr, l, mid);
+            }
+            return -1;
+        }return -1;
+    }
+    int peakIndexInMountainArray(vector<int>& arr) {
+        return peak(arr, 0, arr.size()-1);
+    }
+};

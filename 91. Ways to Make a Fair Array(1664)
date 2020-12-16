@@ -1,0 +1,44 @@
+class Solution {
+public:
+    int waysToMakeFair(vector<int>& nums) {
+        int ans = 0, n=nums.size();
+        vector<int> oddpre(n,0),oddsuff(n,0);
+        vector<int> evenpre(n,0),evensuff(n,0);
+        int oddsum = 0, evensum = 0;   // 2 1 4 7
+        for(int i=0;i<n;i++){
+            evenpre[i] = evensum;
+            oddpre[i] = oddsum;
+            if(i%2 == 0){
+                evensum += nums[i];
+            }else{
+                oddsum += nums[i];
+            }
+        }
+        /*cout<<"Prefix ";
+        for(int i=0;i<n;i++){
+                cout<<evenpre[i]<<" ";
+                cout<<oddpre[i]<<" ";
+        }*/
+        oddsum = 0, evensum = 0;
+        for(int i=n-1;i>=0;i--){
+            evensuff[i] = evensum;
+            oddsuff[i] = oddsum;
+            if(i%2 == 0){
+                evensum += nums[i];
+            }else{
+                oddsum += nums[i];
+            }
+        }
+        /*cout<<"Sufffix ";
+        for(int i=0;i<n;i++){
+                cout<<evensuff[i]<<" ";
+                cout<<oddsuff[i]<<" ";
+        }*/
+        for(int i = 0; i<n ;i++){
+            if((oddpre[i]+evensuff[i])==(evenpre[i]+oddsuff[i])){
+                ans++;
+            }
+        }
+        return ans;
+    }
+};

@@ -1,0 +1,17 @@
+class Solution {
+public:
+    void inorder(TreeNode* root, TreeNode* &ans){
+        if(!root) return;
+        inorder(root->left,ans);
+        root->left = NULL;
+        ans->right = root;
+        ans = root;
+        inorder(root->right,ans);
+    }
+    TreeNode* increasingBST(TreeNode* root) {
+        TreeNode* ans = new TreeNode(0);
+        TreeNode* temp = ans;
+        inorder(root,temp);
+        return ans->right;
+    }
+};

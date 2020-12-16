@@ -1,0 +1,36 @@
+class Solution {
+public:
+    double dist(vector<int>& p1, vector<int>& p2){
+        int x = p1[0] - p2[0];
+        x *= x;
+        int y = p1[1] - p2[1];
+        y *= y;
+        double temp = sqrt((long double) (x + y));
+        return temp;
+    }
+    bool validSquare(vector<int>& p1, vector<int>& p2, vector<int>& p3, vector<int>& p4) {
+        map<double,int> m;
+        m[dist(p1,p2)]++;
+        m[dist(p1,p3)]++;
+        m[dist(p1,p4)]++;
+        m[dist(p2,p3)]++;
+        m[dist(p2,p4)]++;
+        m[dist(p3,p4)]++;
+        if(m.size() != 2){
+            return false;
+        }
+        auto itr = m.begin();
+        if(itr->second != 4){
+            return false;
+        }else{
+            itr++;
+            if(itr->second != 2){
+                return false;
+            }
+        }
+        /*for(auto itr=m.begin();itr!=m.end();itr++){
+            cout<<itr->first<<" "<<itr->second<<" ";
+        }*/
+        return true;
+    }
+};

@@ -1,0 +1,22 @@
+class Solution {
+public:
+    double findMaxAverage(vector<int>& arr, int k) {
+        ios_base::sync_with_stdio(false);
+        cin.tie(NULL);
+        cout.tie(NULL);
+        double ans = INT_MIN;
+        int  i = 0, j = 0;
+        int n = arr.size();
+        double sum = 0;
+        while(j < k){
+            sum += arr[j++];
+        }
+        ans = max(ans,sum/k);
+        while(j < n){
+            sum += arr[j++];
+            sum -= arr[i++];
+            ans = max(ans,sum/k);
+        }
+        return ans;
+    }
+};

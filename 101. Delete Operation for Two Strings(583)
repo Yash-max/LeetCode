@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int util(string &text1, int i, int &n, string &text2, int j, int &m, vector < vector < int > > &dp){
+        if(i == n || j == m){
+            return 0;
+        }
+        if(dp[i][j] != -1){
+            return dp[i][j];
+        }
+        if(text1[i] == text2[j]){
+            return dp[i][j] = 1+util(text1,i+1,n,text2,j+1,m,dp);
+        }
+        return dp[i][j] = max(util(text1,i+1,n,text2,j,m,dp),util(text1,i,n,text2,j+1,m,dp));
+    }
+    int longestCommonSubsequence(string &text1, string &text2) {
+        int n = text1.length();
+        int m = text2.length();
+        vector < vector < int > > dp (n+1, vector < int > (m+1, -1));
+        return util(text1, 0, n, text2, 0, m, dp);
+    }
+    int minDistance(string word1, string word2) {
+        int len = longestCommonSubsequence(word1,word2);
+        return word1.length() + word2.length() - 2*len;
+    }
+};

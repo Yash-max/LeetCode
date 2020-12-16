@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int height(TreeNode* root){
+        if(!root){return 0;}
+        return max(height(root->left),height(root->right))+1;
+    }
+    void util(TreeNode* root,int i,int &h,int &sum){
+        if(!root){return;}
+        if(i == h){
+            sum += root->val;
+        }
+        util(root->left,i+1,h,sum);
+        util(root->right,i+1,h,sum);
+    }
+    int deepestLeavesSum(TreeNode* root) {
+        int h = height(root);
+        int sum = 0;
+        util(root,1,h,sum);
+        return sum;
+    }
+};

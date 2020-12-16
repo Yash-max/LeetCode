@@ -1,0 +1,25 @@
+class Solution {
+public:
+    bool util(TreeNode* root,int &prev,int &flag){
+        if(!root){return true;}
+        if(!util(root->left,prev,flag)){
+            return false;
+        }
+        if(flag == 1 && root->val <= prev){
+            return false;
+        }
+        flag = 1;
+        prev = root->val;
+        if(!util(root->right,prev,flag)){
+            return false;
+        }
+        return true;
+    }
+    bool isValidBST(TreeNode* root) {
+        if(!root || (!root->left && !root->right)){
+            return true;
+        }
+        int prev=INT_MIN,flag=0;
+        return util(root,prev,flag);
+    }
+};

@@ -1,0 +1,44 @@
+class Solution {
+public:
+    int factor(int n){
+        if(n == 1) return 1;
+        int c = 0;
+        for(int i = 1; i <= sqrt(n) ;i++){
+            if(n % i == 0){
+                c++;
+                if(i != n/i){
+                    c++;
+                }
+            }
+        }
+        return c;
+    }
+    int kthFactor(int n, int k) {
+        int tc = factor(n);
+        if(tc < k){
+            return -1;
+        }else if((tc % 2 == 0 && k <= tc/2) || (tc % 2 != 0 && k<=(tc+1)/2)){
+            int c = 0;
+            for(int i = 1; i <= sqrt(n) ;i++){
+                if(n % i == 0){
+                    c++;
+                    if(c == k) return i;
+                }
+            }
+        }else{
+            int c = 0;
+            if(tc % 2 == 0){
+                c = tc/2;
+            }else{
+                c = (tc+1)/2;
+            }
+            for(int i = sqrt(n); i >= 1 ;i--){
+                if(n % i == 0){
+                    c++;
+                    if(c == k) return n/i;
+                }
+            }
+        }
+        return -1;
+    }
+};

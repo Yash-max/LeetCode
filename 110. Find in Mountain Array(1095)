@@ -1,0 +1,75 @@
+class Solution {
+public:
+    int searchPeak(MountainArray &arr, int l, int r){
+        if(l <= r){
+            if(l == r) return l;
+
+            int mid = l+(r-l)/2;
+
+            int left = max(l, mid-1);
+            left = arr.get(left);
+
+            int m = arr.get(mid);
+
+            int right = min(r, mid+1);
+            right = arr.get(right);
+
+            if(m > left && m > right){
+                return mid;
+            }else if(m > left && right > m){
+                return searchPeak(arr, mid, r);
+            }else if(m < left && right < m){
+                return searchPeak(arr, l, mid);
+            }
+        }
+        return -1;
+    }
+    int searchBefore(MountainArray &arr, int l, int r, int &x){
+        if(l <= r){
+            int mid = l+(r-l)/2;
+            int m = arr.get(mid);
+            if(m == x){
+                return mid;
+            }else if(m < x){
+                return searchBefore(arr, mid+1, r, x);
+            }else if(m > x){
+                return searchBefore(arr, l, mid-1, x);
+            }
+        }
+        return -1;
+    }
+    int searchAfter(MountainArray &arr, int l, int r, int &x){
+        if(l <= r){
+            int mid = l+(r-l)/2;
+            int m = arr.get(mid);
+            if(m == x){
+                return mid;
+            }else if(m > x){
+                return searchAfter(arr, mid+1, r, x);
+            }else if(m < x){
+                return searchAfter(arr, l, mid-1, x);
+            }
+        }
+        return -1;
+    }
+    int findInMountainArray(int target, MountainArray &mountainArr) {
+        if(mountainArr.get(0) == target){
+            return 0;
+        }
+        int n = mountainArr.length();
+        int peak = searchPeak(mountainArr, 0, n-1);
+        //return peak;
+        if(peak == -1) return -1;
+        if(mountainArr.get(peak) == target){
+            return peak;
+        }
+        int ans = searchBefore(mountainArr, 0, peak-1, target);
+        if(ans != -1) return ans;
+        ans = searchAfter(mountainArr, peak+1, n-1, target);
+        if(ans != -1) return ans;
+        if(mountainArr.get(n-1) == target){
+            return n-1;
+        }
+        return ans;
+    }
+};

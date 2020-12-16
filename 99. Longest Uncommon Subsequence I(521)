@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int findLUSlength(string a, string b) {
+        int mapx[26], map2[26];
+        memset(mapx,0,sizeof(mapx));
+        for(int i = 0; i < a.length(); i++){
+            mapx[a[i]-'a']++;
+        }
+        for(int i = 0; i < b.length(); i++){
+            mapx[b[i]-'a']--;
+        }
+        for(int i = 0; i < 26; i++){
+            if(mapx[i] != 0){
+                return max(a.length(), b.length());
+            }
+        }
+        return -1;
+    }
+};

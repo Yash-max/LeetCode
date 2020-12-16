@@ -1,0 +1,20 @@
+class Solution {
+public:
+     int depth(TreeNode* root) {
+        if(!root) return 0;
+        return max(depth(root->left),depth(root->right))+1;
+    }
+    TreeNode* subtreeWithAllDeepest(TreeNode* root){
+        if(!root) return NULL;
+        int dl = depth(root->left);
+        int dr = depth(root->right);
+        if(dl == dr){
+            return root;
+        }else if(dl > dr){
+            return subtreeWithAllDeepest(root->left);
+        }else{
+            return subtreeWithAllDeepest(root->right);
+        }
+        return NULL;
+    }
+};
