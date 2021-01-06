@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<bool> checkArithmeticSubarrays(vector<int>& arr, vector<int>& l, vector<int>& r) {
+    vector<bool> v;
+    int q = l.size();
+      for(int i=0;i<q;i++){
+        int flag=0;
+        unordered_map<int,int> m;
+        int x=l[i], y=r[i];
+        int diff = arr[y]-arr[x];
+        m[diff]++;
+        for(;x<=r[i];x++){
+            diff = arr[x]-arr[x-1];
+            m[diff]++;
+            if(m.find(diff)!=m.end() && m[diff] > 1){
+                flag=1;
+                v.push_back(true);
+                break;
+            }
+        }
+        if(flag==0){v.push_back(false);}
+      }
+        return v;
+    }
+};

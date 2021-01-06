@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int nextGreaterElement(int n) {
+        if(n == INT_MAX) return -1;
+        vector<int> v;
+        int temp = n;
+        while(temp){
+            v.push_back(temp % 10);
+            temp /= 10;
+        }
+        temp = INT_MAX;
+        if(v.size() == 10 && n){
+
+        }
+        reverse(v.begin(),v.end());
+        vector<int> ans(v);
+        do{
+            long res = 0;
+            for(int j=0;j<v.size();j++){
+                res = res * 10 + ans[j];
+            }
+            if(ans.size() == 10 && ans[0] > 2){return -1;}
+            if(res > n){
+                return res;
+            }
+        }while(next_permutation(ans.begin(),ans.end()));
+        return -1;
+    }
+};

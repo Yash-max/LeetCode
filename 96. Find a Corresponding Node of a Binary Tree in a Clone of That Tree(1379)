@@ -1,0 +1,15 @@
+class Solution {
+public:
+    TreeNode* util(TreeNode* cloned, TreeNode* target){
+        if(!cloned) return NULL;
+        if(cloned->val == target->val) return cloned;
+        TreeNode* ans = util(cloned->left, target);
+        if(ans){
+            return ans;
+        }
+        return util(cloned->right, target);
+    }
+    TreeNode* getTargetCopy(TreeNode* original, TreeNode* cloned, TreeNode* target) {
+        return util(cloned, target);
+    }
+};

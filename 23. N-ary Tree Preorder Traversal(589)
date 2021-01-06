@@ -1,0 +1,15 @@
+class Solution {
+public:
+    void util(Node* root, vector<int> &v){
+        if(!root){return ;}
+        v.push_back(root->val);
+        for(auto itr : root->children){
+            util(itr, v);
+        }
+    }
+    vector<int> preorder(Node* root) {
+        vector<int> v;
+        util(root,v);
+        return v;
+    }
+};

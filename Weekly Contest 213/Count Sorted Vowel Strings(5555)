@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int util(int i,int n,int j,vector < vector < int > > & dp){
+        if(i == n){
+            return 1;
+        }
+        if(dp[i][j] != -1){
+            return dp[i][j];
+        }
+        int ans=0;
+        for(int k=j;k<5;k++){
+            ans += util(i+1,n,k,dp);
+        }
+        return ans;
+    }
+    int countVowelStrings(int n) {
+        vector < vector < int > > dp (n+1,vector < int > (6,-1));
+        int ans=0;
+        for(int i=0;i<5;i++){
+            ans += util(1,n,i,dp);
+        }
+        return ans;
+    }
+};

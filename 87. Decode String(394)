@@ -1,0 +1,43 @@
+class Solution {
+public:
+    string decodeString(string s) {
+        string ans;
+        int n = s.length() , i = 0;
+        while(i < n && (s[i] >= 'a' && s[i] <= 'z')){
+            ans += s[i++];
+        }
+        int x = 0;
+        while(i < n && (s[i] >= '0' && s[i] <= '9')){
+            x = x * 10 + (s[i++] - '0');
+        }
+        if(i < n && s[i] == '['){
+            string temp;
+            stack<char> st;
+            st.push(s[i++]);
+            while(!st.empty() && i < n){
+                if(st.size() == 1 && s[i] == ']'){
+                    i++;
+                    st.pop();
+                }else{
+                    if(s[i] == '['){
+                        st.push(s[i]);
+                    }
+                    if(s[i] == ']'){
+                        st.pop();
+                    }
+                    temp += s[i++];
+                }
+            }
+            //cout<<temp<<" ";
+            temp = decodeString(temp);
+            for(int j = 0 ; j < x ; j++){
+                ans += temp;
+            }
+        }
+        if(i < n){
+            string temp = string (s.begin() + i , s.end());
+            ans += decodeString(temp);
+        }
+        return ans;
+    }
+};

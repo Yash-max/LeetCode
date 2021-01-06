@@ -1,0 +1,71 @@
+class Solution {
+public:
+    int util(char ch){
+        switch(ch){
+            case '+' : case '-' : return 1;
+            case '/' : case '*' : return 2;
+        }
+        return 3;
+    }
+    int calculate(string s) {
+        int ans = 0;
+        string postfix;
+        stack<int> intS;
+        stack<char> charS;
+        int i = 0, n = s.length();
+        while( i < n ){
+          if(s[i] == ' '){
+            s[i++];
+          }else if(s[i] >= '0' && s[i] <= '9'){
+              int num = 0;
+              while(i < n && (s[i] >= '0' && s[i] <= '9')){
+                  num = num * 10 + (s[i++] - '0');
+              }
+              intS.push(num);
+          }else{
+              if(charS.empty() || (util(s[i]) > util(charS.top()))){
+                  charS.push(s[i++]);
+              }else{
+                  while(!charS.empty() && util(s[i]) <= util(charS.top())){
+                      char temp = charS.top();
+                      charS.pop();
+                      int y = intS.top();
+                      intS.pop();
+                      int x = intS.top();
+                      intS.pop();
+                      if(temp == '+'){
+                          x += y;
+                      }else if(temp == '-'){
+                          x -= y;
+                      }else if(temp == '*'){
+                          x *= y;
+                      }else{
+                          x /= y;
+                      }
+                      intS.push(x);
+                  }
+                  charS.push(s[i++]);
+              }
+          }
+        }
+        while(!charS.empty()){
+            char temp = charS.top();
+            charS.pop();
+            int y = intS.top();
+            intS.pop();
+            int x = intS.top();
+            intS.pop();
+            if(temp == '+'){
+                x += y;
+            }else if(temp == '-'){
+                x -= y;
+            }else if(temp == '*'){
+                x *= y;
+            }else{
+                x /= y;
+            }
+            intS.push(x);
+        }
+        return intS.top();
+    }
+};

@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int util(TreeNode* root,multimap<int,int> &v, int level,int h){
+        if(!root){return 0;}
+        v.insert({level,root->val});
+        int a=util(root->left,v,level+1,h+1);
+        int b=util(root->right,v,level+1,h+1);
+        return max(a,b)+1;
+    }
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        multimap<int,int> m;
+        int h=util(root,m,0,0);
+        vector<vector<int>> v(h);
+        for(auto itr=m.begin();itr!=m.end();itr++){
+            v[itr->first].push_back(itr->second);
+        }
+        return v;
+    }
+};

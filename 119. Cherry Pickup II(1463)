@@ -1,0 +1,39 @@
+class Solution {
+public:
+    int util(vector<vector<int>>& grid,int i,int j1, int j2,int &b,int &r,vector<vector<vector<int>>> &dp){
+        if(j1 < 0 || j1 >= r || j2 < 0 || j2 >= r || i == b) return 0;
+        if(dp[i][j1][j2] != -1) return dp[i][j1][j2];
+        int ans = 0, x = 0;
+        if(j1 == j2){
+            x += grid[i][j1];
+        }else{
+            x += grid[i][j1] + grid[i][j2];
+        }
+        for(int x = -1; x <= 1; x++){
+            for(int y = -1; y <= 1; y++){
+                int temp = 0;
+                temp += util(grid,i+1,j1+x,j2+y,b,r,dp);
+                ans = max(ans,temp);
+            }
+        }
+        return dp[i][j1][j2] = ans + x;
+    }
+    int cherryPickup(vector<vector<int>>& grid) {
+        int n = grid.size();
+        int m = grid[0].size();
+        int ans = 0;
+        if(m == 1){
+            for(int i=0;i<n;i++){
+                ans += grid[i][0];
+            }
+            return ans;
+        }else if(m == 2){
+            for(int i=0;i<n;i++){
+                ans += grid[i][0]+grid[i][1];
+            }
+            return ans;
+        }
+        vector<vector<vector<int>>> dp(n+1,vector<vector<int>>(m+1,vector<int>(m+1,-1)));
+        return util(grid,0,0,m-1,n,m,dp);
+    }
+};

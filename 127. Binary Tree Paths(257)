@@ -1,0 +1,27 @@
+class Solution {
+public:
+    void util(TreeNode* root,string s,vector<string> &v){
+        if(!root) {
+            v.push_back(s);
+            return;
+        }
+        s += to_string(root->val);
+        if(!root->left && !root->right){
+            v.push_back(s);
+        }else{
+            if(root->left){
+                util(root->left,s+"->",v);
+            }
+            if(root->right){
+                util(root->right,s+"->",v);
+            }
+        }
+    }
+    vector<string> binaryTreePaths(TreeNode* root) {
+        vector<string> v;
+        if(root){
+            util(root,"",v);
+        }
+        return v;
+    }
+};

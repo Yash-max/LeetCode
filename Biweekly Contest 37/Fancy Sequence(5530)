@@ -1,0 +1,80 @@
+// TLE :
+class Fancy {
+public:
+    vector<long long> arr;
+    int i=0,mod = 1e9+7;
+    Fancy() {
+        vector<long long> temp(1e5,0);
+        arr = temp;
+    }
+
+    void append(int val) {
+        arr[i++]=val;
+    }
+
+    void addAll(int inc) {
+        for(int x=0;x<i;x++){
+            arr[x] = (arr[x] + inc) % mod;
+        }
+    }
+
+    void multAll(int m) {
+        for(int x=0;x<i;x++){
+            arr[x] = (arr[x] * m) % mod;
+        }
+    }
+
+    int getIndex(int idx) {
+        if(i <= idx){return -1;}
+        return arr[idx];
+    }
+};
+
+/**
+ * Your Fancy object will be instantiated and called as such:
+ * Fancy* obj = new Fancy();
+ * obj->append(val);
+ * obj->addAll(inc);
+ * obj->multAll(m);
+ * int param_4 = obj->getIndex(idx);
+ */
+
+// Another Try
+// TLE : 1452ms
+
+class Fancy {
+public:
+    vector<long long> arr;
+    vector < pair < long long , pair < char , long long > > > op;
+    int i=0,mod = 1e9+7;
+    Fancy() {
+
+    }
+
+    void append(int val) {
+        arr.push_back(val);
+    }
+
+    void addAll(int inc) {
+        op.push_back({arr.size()-1,{'a',inc}});
+    }
+
+    void multAll(int m) {
+        op.push_back({arr.size()-1,{'m',m}});
+    }
+
+    int getIndex(int idx) {
+        if(arr.size() <= idx){return -1;}
+        long long ans = arr[idx];
+        for(int i=0;i<op.size();i++){
+            if(op[i].first >= idx){
+                if(op[i].second.first == 'a'){
+                    ans = (ans + op[i].second.second) % mod;
+                }else{
+                    ans = (ans * op[i].second.second) % mod;
+                }
+            }
+        }
+        return ans;
+    }
+};

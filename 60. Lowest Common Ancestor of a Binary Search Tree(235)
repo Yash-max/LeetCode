@@ -1,0 +1,41 @@
+class Solution {
+public:
+    void util(TreeNode* root, int& x, stack<TreeNode*>& s){
+        if(!root){return;}
+        s.push(root);
+        if(root->val == x){
+            return;
+        }else if(root->val > x){
+            return util(root->left,x,s);
+        }else{
+            return util(root->right,x,s);
+        }
+    }
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if(root == p || root == q){return root;}
+        stack<TreeNode*> s1,s2;
+        util(root,p->val,s1);
+        util(root,q->val,s2);
+        int n = s1.size();
+        int m = s2.size();
+        if(n > m){
+            while(n != m){
+                s1.pop();
+                n--;
+            }
+        }else if(m > n){
+            while(n != m){
+                s2.pop();
+                m--;
+            }
+        }
+        while(n > 0 && m > 0){
+            if(s1.top() == s2.top()){
+                return s1.top();
+            }
+            s1.pop(),s2.pop();
+            n--,m--;
+        }
+        return NULL;
+    }
+};

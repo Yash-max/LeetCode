@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int numComponents(ListNode* head, vector<int>& G) {
+        set<int> s;
+        for(int i=0;i<G.size();i++){
+            s.insert(G[i]);
+        }
+        int c=0;
+        ListNode* curr=head;
+        int len=0;
+        while(curr){
+            if(s.find(curr->val)!=s.end()){
+                while(curr && s.find(curr->val)!=s.end()){
+                    len++;
+                    curr=curr->next;
+                }
+            }else{
+               if(len){c++;}
+                len=0;
+                curr=curr->next;
+            }
+        }
+        if(len){c++;}
+        return c;
+    }
+};

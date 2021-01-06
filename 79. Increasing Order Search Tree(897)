@@ -1,0 +1,24 @@
+class Solution {
+public:
+    void util(TreeNode* root,vector<TreeNode*> &v){
+        if(!root) return;
+        util(root->left,v);
+        v.push_back(root);
+        util(root->right,v);
+    }
+    TreeNode* increasingBST(TreeNode* root) {
+        TreeNode* ans=NULL,*temp=NULL;
+        vector<TreeNode*> v;
+        util(root,v);
+        ans=v[0];
+        temp=ans;
+        for(int i=1;i<v.size();i++){
+            TreeNode* t=NULL;
+            t = v[i];
+            t->left=NULL,t->right=NULL;;
+            temp->right = t;
+            temp = temp->right;
+        }
+        return ans;
+    }
+};

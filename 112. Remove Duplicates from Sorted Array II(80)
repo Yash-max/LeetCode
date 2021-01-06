@@ -1,0 +1,34 @@
+class Solution {
+public:
+    int removeDuplicates(vector<int>& arr) {
+        int n = arr.size();
+        int len = n;
+        if(len <= 2){return len;}
+        int i=0;
+        /*while(j<n){
+            if(arr[i] == arr[j]){
+                arr[i++]=arr[j++];
+                if(j < n && arr[i-1] == arr[j]){
+                    arr[i++]=arr[j++];
+                    while(j < n && arr[i-1] == arr[j]){j++,len--;}
+                }
+            }else{
+                arr[i++]=arr[j++];
+            }
+        }*/
+        //    1 1 1 1 1
+        for(int j=0;j<n-1;j++){
+            if(arr[j] != arr[j+1]){
+                arr[i++]=arr[j];
+            }else if(arr[j] == arr[j+1]){
+                while(j < n-1 && arr[j] == arr[j+1]){
+                    j++;
+                }
+                j--;
+                arr[i++]=arr[j];
+            }
+        }
+        arr[i++]=arr[n-1];
+        return i;
+    }
+};

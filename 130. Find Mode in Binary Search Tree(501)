@@ -1,0 +1,22 @@
+class Solution {
+public:
+    void inorder(TreeNode* root,map<int,int> &m){
+        if(!root) return;
+        inorder(root->left,m);
+        m[root->val]++;
+        inorder(root->right,m);
+    }
+    vector<int> findMode(TreeNode* root) {
+        map<int,int> m;
+        vector<int> v;
+        inorder(root,m);
+        int max_f = INT_MIN;
+        for(auto itr = m.begin();itr != m.end();itr++){
+            max_f = max(max_f,itr->second);
+        }
+        for(auto itr = m.begin();itr != m.end();itr++){
+            if(itr->second == max_f) v.push_back(itr->first);
+        }
+        return v;
+    }
+};

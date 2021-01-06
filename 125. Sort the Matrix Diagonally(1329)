@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<vector<int>> diagonalSort(vector<vector<int>>& mat) {
+        int n = mat.size();
+        int m = mat[0].size();
+        vector < vector < int > > values(n+m);
+        vector < vector < pair <int, int> > > index(n+m);
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                values[m+i-j-1].push_back(mat[i][j]);
+                index[m+i-j-1].push_back({i,j});
+            }
+        }
+        for(int i=0;i<values.size()-1;i++){
+            sort(values[i].begin(),values[i].end());
+            for(int j=0;j<values[i].size();j++){
+                mat[index[i][j].first][index[i][j].second] = values[i][j];
+            }
+        }
+        return mat;
+    }
+};

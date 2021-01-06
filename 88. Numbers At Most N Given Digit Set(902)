@@ -1,0 +1,45 @@
+class Solution {
+public:
+    int util(int x, int n){
+        int ans = 1;
+        for(int i = 0 ; i < n ; i++){
+            ans *= x;
+        }
+        return ans;
+    }
+    int recur(vector<string>& digits,string curr,string &s,int &len){
+        int x = curr.length();
+        if(x > len){
+            return 0;
+        }
+        if(x == len){
+            return 1;
+        }
+        int ans = 0;
+        for(int i=0;i<digits.size();i++){
+            int t = max(0,x-1);
+            if(digits[i][0] < s[x]){
+                ans += util(digits.size(),len-x-1);
+            }else if(digits[i][0] == s[x]){
+                ans += recur(digits,curr+digits[i][0],s,len);
+            }
+        }
+        return ans;
+    }
+    int atMostNGivenDigitSet(vector<string>& digits, int n) {
+        int ans = 0, x = digits.size();
+        string s = to_string(n);
+        int len = s.length();
+        for(int i = 1 ; i < len ; i++){
+            ans += util(x,i);
+        }
+        sort(digits.begin(),digits.end());
+        //cout<<len<<" ";
+        ans += recur(digits,"",s,len);
+        return ans;
+        /*
+        ["1","2","3","4","5","6","7","8","9"]
+        74546987
+        */
+    }
+};

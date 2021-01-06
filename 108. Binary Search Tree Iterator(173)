@@ -1,0 +1,38 @@
+class BSTIterator {
+public:
+    TreeNode *root;
+    BSTIterator(TreeNode* x) {
+        root = x;
+    }
+    int util(TreeNode* &temp){
+        if(!temp){return -1;}
+        if(!temp->left && !temp->right){
+            int x = temp->val;
+            temp = NULL;
+            return x;
+        }else if(temp->left){
+            return util(temp->left);
+        }else{
+            int x = temp->val;
+            temp = temp->right;
+            return x;
+        }
+        return -1;
+    }
+    /*void inorder(TreeNode *temp){
+        if(!temp) return;
+        cout<<temp->val<<" ";
+        inorder(temp->left);
+        inorder(temp->right);
+    }*/
+    int next() {
+        return util(root);
+    }
+
+    bool hasNext() {
+        if(!root){
+            return false;
+        }
+        return true;
+    }
+};

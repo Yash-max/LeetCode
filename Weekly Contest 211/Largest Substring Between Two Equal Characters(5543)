@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int maxLengthBetweenEqualCharacters(string s) {
+        int ans=-1;
+        map<char,int> m,freq;
+        m[s[0]]=0;
+        freq[s[0]]++;
+        for(int i=1;i<s.length();i++){
+            if(freq[s[i]] > 0){
+                ans = max(ans,i-m[s[i]]-1);
+            }else{
+                m[s[i]]=i;
+                freq[s[i]]++;
+            }
+        }
+        return ans;
+    }
+};

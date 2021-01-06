@@ -1,0 +1,25 @@
+class Solution {
+public:
+    void util(TreeNode* root, int temp, int &ans){
+        if(!root){
+            ans += temp;
+            return;
+        }
+        temp = (temp << 1) + root->val;
+        if(!root->left && !root->right){
+            ans += temp;
+        }else{
+            if(root->left){
+                util(root->left,temp,ans);
+            }
+            if(root->right){
+                util(root->right,temp,ans);
+            }
+        }
+    }
+    int sumRootToLeaf(TreeNode* root) {
+        int ans = 0;
+        util(root,0,ans);
+        return ans;
+    }
+};

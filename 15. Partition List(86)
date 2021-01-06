@@ -1,0 +1,38 @@
+class Solution {
+public:
+    ListNode* partition(ListNode* head, int x) {
+        ListNode *less=NULL,*greater=NULL,*temp=head,*head2=NULL;
+        while(temp){
+            if(temp->val < x){
+                if(!less){
+                    less=temp;
+                    head=less;
+                }else{
+                    less->next=temp;
+                    less=less->next;
+                }
+            }else{
+                if(!greater){
+                    greater=temp;
+                    head2=greater;
+                }else{
+                    greater->next=temp;
+                    greater=greater->next;
+                }
+            }
+            temp=temp->next;
+        }
+        if(less){
+            less->next=NULL;
+        }
+        if(greater){
+            greater->next=NULL;
+        }
+        if(!less){
+            return head2;
+        }else{
+            less->next=head2;
+            return head;
+        }
+    }
+};

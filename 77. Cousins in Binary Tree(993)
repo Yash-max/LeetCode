@@ -1,0 +1,36 @@
+class Solution {
+public:
+    void util(TreeNode* root, stack<int> &s, int &flag, int &x){
+        if(!root){
+            return;
+        }
+        if(root->val == x){
+            flag = 1;
+            return;
+        }
+        s.push(root->val);
+        util(root->left, s, flag, x);
+        if(!flag){
+            while(s.top() != root->val){
+                s.pop();
+            }
+            util(root->right, s, flag, x);
+        }
+    }
+    bool isCousins(TreeNode* root, int x, int y) {
+        if(root->val == x || root->val == y || x == y){
+            return false;
+        }
+        stack<int> s1,s2;
+        int flag = 0;
+        util(root,s1,flag,x);
+        flag = 0;
+        util(root,s2,flag,y);
+        int n = s1.size();
+        int m = s2.size();
+        if(n != m || s1.top() == s2.top()){
+            return false;
+        }
+        return true;
+    }
+};

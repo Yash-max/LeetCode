@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int util(int i,int n,vector<int>& heights,int bricks, int ladders,vector < vector < vector < int > > > &dp){
+        if(i == n){
+            return n;
+        }
+        if(dp[bricks][ladders][i] != -1){
+            return dp[bricks][ladders][i];
+        }
+        if(heights[i] >= heights[i+1]){
+            return dp[bricks][ladders][i]=util(i+1,n,heights,bricks,ladders,dp);
+        }
+        int diff = (heights[i+1] - heights[i]);
+        if(bricks < diff && ladders == 0){
+            return dp[bricks][ladders][i] = i;
+        }
+        int b=0,h=0;
+        if(bricks >= diff){
+            b = util(i+1,n,heights,bricks-diff,ladders,dp);
+        }
+        if(ladders > 0){
+            h = util(i+1,n,heights,bricks,ladders-1,dp);
+        }
+        return dp[bricks][ladders][i]=max(b,h);
+    }
+    int furthestBuilding(vector<int>& heights, int bricks, int ladders) {
+        int n=heights.size();
+        vector < vector < vector < int > > > dp (bricks+1,vector < vector < int > >(ladders+1, vector < int > (n+1,-1)));
+        return util(0,n-1,heights,bricks,ladders,dp);
+    }
+};

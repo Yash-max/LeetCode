@@ -1,0 +1,16 @@
+class Solution {
+public:
+    bool isUnivalTree(TreeNode* root) {
+        if(!root || (!root->left && !root->right)){return true;}
+        if(!root->left && root->right){
+            if(root->val != root->right->val) return false;
+            return isUnivalTree(root->right);
+        }
+        if(root->left && !root->right){
+            if(root->val != root->left->val) return false;
+            return isUnivalTree(root->left);
+        }
+        if(root->val != root->left->val || root->val != root->right->val) return false;
+        return (isUnivalTree(root->left) && isUnivalTree(root->right));
+    }
+};

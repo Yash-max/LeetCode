@@ -1,0 +1,30 @@
+class Solution {
+public:
+    void util(TreeNode* root,vector<int> &v,int &height,int level){
+        if(!root){return;}
+        if(height < level){
+            v.push_back(root->val);
+            height++;
+        }else{
+            v[level-1] += root->val;
+        }
+        util(root->left,v,height,level+1);
+        util(root->right,v,height,level+1);
+    }
+    int maxLevelSum(TreeNode* root) {
+        ios_base::sync_with_stdio(false);
+        cin.tie(NULL);
+        cout.tie(NULL);
+        vector<int> v;
+        int height = 0;
+        util(root,v,height,1);
+        int ans=v[0],index=1;
+        for(int i=1;i<v.size();i++){
+            if(v[i] > ans){
+                ans = v[i];
+                index = i+1;
+            }
+        }
+        return index;
+    }
+};

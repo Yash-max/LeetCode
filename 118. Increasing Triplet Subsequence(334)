@@ -1,0 +1,38 @@
+// 16ms Solution
+class Solution {
+public:
+    bool increasingTriplet(vector<int>& arr) {
+        int n = arr.size();
+        if(n < 3) return false;
+        int x = arr[0];
+        for(int i=1;i<n;i++){
+            if(x < arr[i]){
+                for(int j = i+1;j<n;j++){
+                    if(x < arr[i] && arr[i] < arr[j]) return true;
+                }
+            }
+            x = min(x,arr[i]);
+        }
+        return false;
+    }
+};
+
+// 0ms Solution
+class Solution {
+public:
+    bool increasingTriplet(vector<int>& arr) {
+        int n = arr.size();
+        if(n < 3) return false;
+        int x = INT_MAX, y = INT_MAX;
+        for(int i=0;i<n;i++){
+            if(arr[i] <= x){
+                x = arr[i];
+            }else if(arr[i] <= y){
+                y = arr[i];
+            }else{
+                return 1;
+            }
+        }
+        return false;
+    }
+};
