@@ -1,0 +1,20 @@
+class Solution {
+public:
+    TreeNode* util(vector<int>& preorder, int i, int j, vector<int>& inorder, int x, int y) {
+        if(i > j || x > y || i < 0 || j < 0 || x < 0 || y < 0) return NULL;
+        TreeNode* root = new TreeNode(preorder[i]);
+        if(i == j) return root;
+        int t = x;
+        for(; t <= y; t++) {
+            if(inorder[t] == preorder[i]) break;
+        }
+        //cout << (i+1) << " " << (i+(t-x)) << " " << x << " " << (t-1) << "\n";
+        root->left  = util(preorder, i+1, i+(t-x), inorder, x, t-1);
+        //cout << (i+(t-x)+1) << " " << (j) << " " << (t+1) << " " << (y) << " ";
+        root->right = util(preorder, i+(t-x)+1, j, inorder, t+1, y);
+        return root;
+    }
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        return util(preorder, 0, preorder.size()-1, inorder, 0, inorder.size()-1);
+    }
+};
