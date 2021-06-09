@@ -1,0 +1,31 @@
+class Solution {
+public:
+    static bool cmp(const string &a, const string &b) {
+        if(a.length() != b.length()) {
+            return a.length() < b.length();
+        } else {
+            return a < b;
+        }
+    }
+    int longestStrChain(vector<string>& words) {
+        unordered_map<string, int> mp;
+        int ans = 0;
+        sort(words.begin(), words.end(), cmp);
+        for(int i = 0; i < words.size(); i++) {
+            int temp = 0, len = words[i].length();
+            for(int x = 0; x < len; x++) {
+                string str = words[i].substr(0, x) + words[i].substr(x+1, len-x+1);
+                //cout << str << "\n";
+                if(mp.find(str) != mp.end()) {
+                    temp = max(temp, mp[str]);
+                }
+            }
+            ans = max(ans, temp+1);
+            mp.insert({words[i], temp+1});
+        } //cout << '\n';
+        /*for(auto itr: mp) {
+            cout << itr.first << " " << itr.second << '\n';
+        }*/
+        return ans;
+    }
+};
