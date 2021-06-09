@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int coinChange(vector<int>& coins, int amount) {
+        if(amount == 0) return 0;
+        int dp[amount+1], n = coins.size();
+        sort(coins.begin(), coins.end());
+        dp[0] = 0;
+        for(int i = 1; i <= amount; i++) {
+            dp[i] = 10000;
+            for(int j = 0; j < n && coins[j] <= i; j++) {
+                dp[i] = min(dp[i], dp[i-coins[j]]);
+            }
+            dp[i]++;
+        }
+        return (dp[amount] >= 10000)? -1: dp[amount];
+    }
+};
