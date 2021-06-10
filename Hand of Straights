@@ -1,0 +1,23 @@
+class Solution {
+public:
+    bool isNStraightHand(vector<int>& arr, int k) {
+        int n = arr.size();
+        if(n % k != 0) return false;
+        int m = n / k;
+        map<int, int> mp;
+        for(int i = 0; i < arr.size(); i++) {
+            mp[arr[i]]++;
+            if(mp[arr[i]] > m) return false;
+        }
+        for(auto itr: mp) {
+            int num = itr.first;
+            int freq = itr.second;
+            if(freq == 0) continue;
+            for(int i = 1; i < k; i++) {
+                if(mp.find(num+i) == mp.end() || mp[num+i] < freq) return false;
+                mp[num+i] -= freq;
+            }
+        }
+        return true;
+    }
+};
