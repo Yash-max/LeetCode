@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int util(int amt, vector<int> &coins, int i, vector<vector<int>> &dp) {
+        if(amt == 0) return 1;
+        if(amt < 0 || i == 0) return 0;
+        if(dp[i][amt] != -1) return dp[i][amt];
+        int ans = 0;
+        for(int j = i; j > 0; j--) {
+            ans += util(amt-coins[j-1], coins, j, dp);
+        }
+        return dp[i][amt] = ans;
+    }
+    int change(int amount, vector<int>& coins) {
+        if(amount == 0) return 1;
+        sort(coins.begin(), coins.end());
+        int n = coins.size();
+        vector<vector<int>> dp(n+1, vector<int> (amount+1, -1));
+        return util(amount, coins, n, dp);
+    }
+};
