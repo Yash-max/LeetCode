@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int reductionOperations(vector<int>& arr) {
+        if(arr.size() == 0) return 0;
+        int ans = 0, n = arr.size();
+        sort(arr.begin(), arr.end());
+        int first = arr[0], last = arr[n-1];
+        if(arr[n-1] == arr[0]) return 0;
+        int temp = 1;
+        for(int i = n-2; i >= 0 && arr[i] != first ; i--) {
+            if(arr[i] == arr[i+1]) {
+                temp++;
+            } else {
+                ans += temp;
+                temp++;
+            }
+        }
+        ans += temp;
+        return  ans;
+    }
+};
