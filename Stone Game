@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int util(const vector<int>& piles, int i, int j, int flag, vector<vector<vector<int>>> &dp) {
+        if(i > j) {
+            return 0;
+        }
+        if(i == j) {
+            if(flag) {
+                return piles[i];
+            } else {
+                return 0;
+            }
+        }
+        if(dp[i][j][flag] != -1) return dp[i][j][flag];
+        int ans = 0;
+        if(flag) {
+            ans = max(util(piles, i, j-1, !flag, dp) + piles[j], util(piles, i+1, j, !flag, dp) + piles[i]);
+        } else {
+            ans = max(util(piles, i, j-1, !flag, dp), util(piles, i+1, j, !flag, dp));
+        }
+        return dp[i][j][flag] = ans;
+    }
+    bool stoneGame(vector<int>& piles) {
+        int n = piles.size();
+        if(n == 2) return true;
+        vector<vector<vector<int>>> dp(n+1, vector<vector<int>> (n+1, vector<int> (2, -1)));
+        int alex = util(piles, 0, n-1, 1, dp), sum = 0;
+        //cout << alex << " ";
+        for(int i = 0; i < n; i++) sum += piles[i];
+        return alex > (sum - alex);
+    }
+};
