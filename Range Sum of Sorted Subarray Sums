@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int rangeSum(vector<int>& nums, int n, int left, int right) {
+        int prefix[n+1];
+        prefix[0] = 0;
+        for(int i = 1; i <= n; i++) {
+            prefix[i] = prefix[i-1] + nums[i-1];
+        }
+        vector<int> v;
+        for(int len = 1; len <= n; len++) {
+            for(int i = 0; i + len <= n; i++) {
+                v.push_back(prefix[i+len] - prefix[i]);
+            }
+        }
+        sort(v.begin(), v.end());
+        int ans = 0, m = 1e9+7, l = left-1;
+        for(; l < right; l++) {
+            ans = (ans + v[l]) % m;
+        }
+        return  ans;
+    }
+};
