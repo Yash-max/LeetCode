@@ -1,0 +1,46 @@
+class Solution {
+public:
+    bool util(vector<int>& arr, int i, int &n, int a, int b, int c, int d, int &x, unordered_map<string, bool> &mp) {
+        if(i == n) {
+            if(a == x && b == x && c == x && d == x) return true;
+            return false;
+        }
+        vector<int> aux({a,b,c,d});
+        sort(aux.begin(), aux.end());
+        aux.push_back(i);
+        string temp = "";
+        for(int t: aux) {
+            temp += to_string(t) + " ";
+        }
+        if(mp.find(temp) != mp.end()) return mp[temp];
+        bool ans = false;
+        if(a + arr[i] <= x) {
+            ans |= util(arr, i+1, n, a+arr[i], b, c, d, x, mp);
+        }
+        if(b + arr[i] <= x) {
+            ans |= util(arr, i+1, n, a, b+arr[i], c, d, x, mp);
+        }
+        if(c + arr[i] <= x) {
+            ans |= util(arr, i+1, n, a, b, c+arr[i], d, x, mp);
+        }
+        if(d + arr[i] <= x) {
+            ans |= util(arr, i+1, n, a, b, c, d+arr[i], x, mp);
+        }
+        mp.insert({temp, ans});
+        return ans;
+    }
+    bool makesquare(vector<int>& matchsticks) {
+        int sum = 0, n = matchsticks.size();
+        for(int i = 0; i < n; i++) sum += matchsticks[i];
+        //cout << sum << " ";
+        if(sum % 4 != 0) return false;
+        sort(matchsticks.begin(), matchsticks.end(), greater<int> ());
+        int target = sum/4;
+        for(int i = 0; i < n; i++) {
+            if(matchsticks[i] > target) return false;
+        }
+        unordered_map<string, bool> mp;
+        //cout << target << " ";
+        return util(matchsticks, 0, n, 0, 0, 0, 0, target, mp);
+    }
+};
