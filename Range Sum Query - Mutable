@@ -1,0 +1,62 @@
+class NumArray {
+public:
+    int n = 0;
+    vector<int> st;
+    NumArray(vector<int>& arr) {
+        n = arr.size();
+        vector<int> temp(4*n, 0);
+        st = temp;
+        create(arr, 0, n-1, 0);
+    }
+    void create(vector<int>& arr, int i, int j, int itr) {
+        if(i > j) return;
+        if(i == j) {
+            st[itr] = arr[i];
+            return;
+        }
+        int m = i + (j - i) / 2;
+        create(arr, i, m, 2*itr+1);
+        create(arr, m+1, j, 2*itr+2);
+        st[itr] = st[2*itr+1] + st[2*itr+2];
+    }
+    // 0 0 
+    //  0
+    // 0 1
+    void updateUtil(int i, int j, int itr, int &x, int &val) {
+        if(i > j) return;
+        int m = i + (j - i) / 2;
+        if(i == j) {
+            st[itr] = val;
+            return;
+        } else if(m >= x) {
+            updateUtil(i, m, 2*itr+1, x, val);
+        } else {
+            updateUtil(m+1, j, 2*itr+2, x, val);
+        }
+        st[itr] = st[2*itr+1] + st[2*itr+2];
+    }
+    void update(int index, int val) {
+        updateUtil(0, n-1, 0, index, val);
+        //st[0] = st[1] + st[2];
+    }
+    // 0 0 
+    //  0
+    // 0 0
+    int sum(int i, int j, int itr, int l, int r) {
+        if(l <= i && r >= j) {
+            return st[itr];
+        } else if(r < i || l > j || i > j) {
+            return 0;
+        } 
+        int ans = 0, m = i+(j-i)/2;
+        ans += sum(i, m, 2*itr+1, l, r);
+        ans += sum(m+1, j, 2*itr+2, l, r);
+        return ans;
+    }
+    int sumRange(int left, int right) {
+        /*for(int i = 0; i < st.size(); i++) {
+            cout << st[i] << " ";
+        } cout << endl;*/
+        return sum(0, n-1, 0, left, right);
+    }
+};
