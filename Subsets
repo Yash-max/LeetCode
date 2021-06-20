@@ -1,0 +1,24 @@
+class Solution {
+public:
+    void util(set<vector<int>> &ans, int i, int &n, vector<int>& nums, vector<int> &temp) {
+        if(i == n) {
+            ans.insert(temp);
+            return;
+        }
+        util(ans, i+1, n, nums, temp);
+        temp.push_back(nums[i]);
+        util(ans, i+1, n, nums, temp);
+        temp.pop_back();
+    }
+    vector<vector<int>> subsets(vector<int>& nums) {
+        set<vector<int>> ans;
+        int n = nums.size();
+        vector<int> temp;
+        util(ans, 0, n, nums, temp);
+        vector<vector<int>> res;
+        for(auto itr: ans) {
+            res.push_back(itr);
+        }
+        return res;
+    }
+};
