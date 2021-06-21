@@ -1,0 +1,20 @@
+class Solution {
+public:
+    void util(int num, int prev, set<int> &ans, int &low, int &high) {
+        if(num >= low && num <= high) {
+            ans.insert(num);
+        }
+        if(prev == 9 || num > high) return;
+        util(num*10+prev+1, prev+1, ans, low, high);
+    }
+    vector<int> sequentialDigits(int low, int high) {
+        set<int> ans;
+        for(int i = 0; i < 10; i++)
+            util(i, i, ans, low, high);
+        vector<int> res;
+        for(int x: ans) {
+            res.push_back(x);
+        }
+        return res;
+    }
+};
