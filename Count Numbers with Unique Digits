@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int util(int i, int n, bitset<10> &vis) {
+        if(i == n) return 0;
+        int ans = 0;
+        for(int j = 0; j < 10; j++) {
+            if(vis[j] == 1) {
+                ans += pow(10, n-i-1);
+                continue;
+            }
+            vis[j] = 1;
+            ans += util(i+1, n, vis);
+            vis[j] = 0;
+        }
+        return ans;
+    }
+    int countNumbersWithUniqueDigits(int n) {
+        if(n == 0) return 1;
+        if(n == 1) return 10;
+        vector<int> v;
+        int total = 1;
+        for(int i = 0; i < n; i++) total *= 10;
+        int ans = 0;
+        bitset<10> vis;
+        for(int len = 0; len < n; len++) {
+            for(int i = 1; i < 10; i++) {
+                vis[i] = 1;
+                ans += util(len+1, n, vis);
+                vis[i] = 0;
+            }
+        } 
+        //cout << ans << " ";
+        return total-ans;
+    }
+};
