@@ -1,0 +1,25 @@
+class Solution {
+public:
+    TreeNode *util(TreeNode* root, TreeNode* next) {
+        if(!root) {
+            return root;
+        } else if(!root->left && !root->right) {
+            //cout << root->val << " ";
+            if(next) cout << next->val << " ";
+            if(next) root->right = next;
+        } else if(!root->left) {
+            root->right = util(root->right, next);
+        } else {
+            root->right = util(root->right, next);
+            TreeNode* x = (root->right)?root->right:next;
+            //if(x) cout << root->val << " " << x->val << " ";
+            root->right = util(root->left, x);
+            root->left = NULL;
+        }
+        return root; 
+    }
+    void flatten(TreeNode* root) {
+        if(!root || (!root->left && !root->right)) return;
+        util(root, NULL);
+    }
+};
