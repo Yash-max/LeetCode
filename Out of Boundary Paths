@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int x = 1e9+7;
+    int util(vector<vector<vector<int>>> &grid, int i, int j, int &r, int &c, int moves) {
+        if(i < 0 || j < 0 || i >= r || j >= c) return 1;
+        if(moves == 0) return 0;
+        if(grid[i][j][moves] != -1) return grid[i][j][moves];
+        int ans = 0;
+        ans = (ans + util(grid, i+1, j, r, c, moves-1)) % x;
+        ans = (ans + util(grid, i, j+1, r, c, moves-1)) % x;
+        ans = (ans + util(grid, i-1, j, r, c, moves-1)) % x;
+        ans = (ans + util(grid, i, j-1, r, c, moves-1)) % x;
+        return grid[i][j][moves] = ans;
+    }
+    int findPaths(int r, int c, int maxMove, int startRow, int startColumn) {
+        vector<vector<vector<int>>> grid(r+1, vector<vector<int>> (c+1, vector<int> (maxMove+1, -1)));
+        return util(grid, startRow, startColumn, r, c, maxMove) % x;
+    }
+};
