@@ -1,0 +1,52 @@
+class Solution {
+public:
+    bool rowCheck(vector<vector<char>>& board, int x) {
+        vector<int> row(10, 0);
+        for(int i = 0; i < 9; i++) {
+            if(board[x][i] > '0' && board[x][i] <= '9') {
+                row[board[x][i]-'0']++;
+                if(row[board[x][i]-'0'] > 1) return false;
+            }
+        }
+        return true;
+    }
+    bool colCheck(vector<vector<char>>& board, int x) {
+        vector<int> col(10, 0);
+        for(int i = 0; i < 9; i++) {
+            if(board[i][x] > '0' && board[i][x] <= '9') {
+                col[board[i][x]-'0']++;
+                if(col[board[i][x]-'0'] > 1) return false;
+            }
+        }
+        return true;
+    }
+    bool blockCheck(vector<vector<char>>& board, int x, int y) {
+        vector<int> block(10, 0);
+        for(int i = x; i < x+3; i++) {
+            for(int j = y; j < y+3; j++) {
+                if(board[i][j] > '0' && board[i][j] <= '9') {
+                    block[board[i][j]-'0']++;
+                    if(block[board[i][j]-'0'] > 1) return false;
+                }
+            }
+        }
+        return true;
+    }
+    bool isValidSudoku(vector<vector<char>>& board) {
+        for(int x = 0; x < 9; x++) {
+            if(rowCheck(board, x) == false) return false;
+            if(colCheck(board, x) == false) return false;
+        }
+        for(int i = 0; i < 9; i += 3) {
+            for(int j = 0; j < 9; j += 3) {
+                if(blockCheck(board, i, j) == false) return false;
+            }
+        }
+        /*
+        0,0 3,3 6,6
+        3,3 3,6 6,9
+        6,3 6,6 6,9
+        */
+        return true;
+    }
+};
