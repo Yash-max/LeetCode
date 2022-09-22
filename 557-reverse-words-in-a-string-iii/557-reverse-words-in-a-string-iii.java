@@ -1,6 +1,6 @@
 class Solution {
     public String reverseWords(String s) {
-        String ans = "";
+        StringBuilder ans = new StringBuilder();
         int i = 0, j = 0, n = s.length();
         while(i < n) {
             j = i;
@@ -10,12 +10,12 @@ class Solution {
             }
             
             for(int x = j-1; x >= i; x--) {
-                ans += s.charAt(x);    
+                ans.append(s.charAt(x));    
             }
             
-            if(j != n) ans += " ";
+            if(j != n) ans.append(' ');
             i = j+1;
         }
-        return ans;
+        return new String(ans);
     }
 }
