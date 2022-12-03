@@ -8,7 +8,7 @@ class Dto {
 }
 class Solution {
     public String frequencySort(String s) {
-        String ans = "";
+        StringBuilder ans = new StringBuilder();
         
         int []mp = new int[256];
         
@@ -28,10 +28,10 @@ class Solution {
         while(!pq.isEmpty()) {
             Dto dto = pq.poll();
             for(int i = 0; i < dto.freq; i++) {
-                ans += (char)dto.ch;
+                ans.append((char)dto.ch);
             }
         }
         
-        return ans;
+        return ans.toString();
     }
 }
