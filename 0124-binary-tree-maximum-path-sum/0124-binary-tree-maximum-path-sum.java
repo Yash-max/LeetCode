@@ -15,12 +15,12 @@
  */
 class Solution {
     int ans;
-    public int maxPathSumUtil(TreeNode root, int min) {
+    public int maxPathSumUtil(TreeNode root) {
         if(root == null) return -1000;
         int temp = root.val;
         
-        int left = Math.max(0, maxPathSumUtil(root.left , min));
-        int right = Math.max(0,maxPathSumUtil(root.right, min));
+        int left = Math.max(0, maxPathSumUtil(root.left));
+        int right = Math.max(0,maxPathSumUtil(root.right));
         
         temp += left;
         temp += right;
@@ -32,7 +32,7 @@ class Solution {
     }
     public int maxPathSum(TreeNode root) {
         ans = Integer.MIN_VALUE;
-        maxPathSumUtil(root, Integer.MIN_VALUE);
+        maxPathSumUtil(root);
         return ans;
     }
 }
